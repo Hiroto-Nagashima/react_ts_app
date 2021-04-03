@@ -1,12 +1,12 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 import { User } from "../types/api/user";
-type LoginUserContextType={
+export type LoginUserContextType={
   loginUser: User | null
   // hooksの型指定<stateの型>
   setLoginUser: Dispatch<SetStateAction<User | null>>
 }
 // createContext(初期値)
-const LoginUserContext = createContext<LoginUserContextType>({} as LoginUserContextType)
+export const LoginUserContext = createContext<LoginUserContextType>({} as LoginUserContextType)
 
 export const LoginUserProvider =(props:{children: ReactNode})=>{
   const{ children } =props

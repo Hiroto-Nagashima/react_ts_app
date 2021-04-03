@@ -3,31 +3,35 @@ import { Route, Switch } from "react-router"
 import { Login } from "../components/page/Login"
 import { Page404 } from "../components/page/Page404"
 import { HeaderLayout } from "../components/templates/HeaderLayout"
+import { LoginUserProvider } from "../providers/LoginUserProvider"
 import { homeRoutes } from "./HomeRoutes"
 
 export const Router: VFC =memo(()=>{
   return(
     <Switch>
-      <Route exact path="/">
-        <Login/>
-      </Route>
-      <Route path="/home" render={({match:{url}})=>(
-        <Switch>
-          {homeRoutes.map((route)=>(
-            <Route
-              key={route.path}
-              exact={route.exact}
-              path={`${url}${route.path}`}
-            >
-              <HeaderLayout>{route.children}</HeaderLayout>
-            </Route>
-          ))}
-        </Switch>
-      )}
-      />
+      <LoginUserProvider>
+        <Route exact path="/">
+          <Login/>
+        </Route>
+        <Route path="/home" render={({match:{url}})=>(
+          <Switch>
+            {homeRoutes.map((route)=>(
+              <Route
+                key={route.path}
+                exact={route.exact}
+                path={`${url}${route.path}`}
+              >
+                <HeaderLayout>{route.children}</HeaderLayout>
+              </Route>
+            ))}
+          </Switch>
+        )}
+        />
+      </LoginUserProvider>
+      {/* </LoginUserProvider>のなかに404を入れるとエラーになる */}
       <Route path="*">
-        <Page404 />
-      </Route>
+          <Page404 />
+        </Route>
     </Switch>
   )
 }
